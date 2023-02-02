@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a9ca5b3c7dac6459ca2b116cc5a6f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounceController: {fileID: 2094714403}
   file: {fileID: 4900000, guid: 684c2fe196f0867468c6288b35e27eea, type: 3}
 --- !u!1 &2096391197
 GameObject:
