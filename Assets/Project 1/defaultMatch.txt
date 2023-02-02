@@ -1,8 +1,2 @@
-red
-	spawns: 100
-	spawnRate: 0.05
-	health: 50
-blue
-	spawns: 50
-	spawnRate: 0.2
-	health: 100
+red 100 0.1 50
+blue 50 0.2 100
