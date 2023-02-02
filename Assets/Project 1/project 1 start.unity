@@ -1063,12 +1063,12 @@ MonoBehaviour:
   redSpawner: {fileID: 24194821}
   blueSpawner: {fileID: 1280934880}
   bouncePrefab: {fileID: 8961546607511619895, guid: efd71309375231e4ea950bab5899eb44, type: 3}
-  redSpawnRate: 0.1
-  blueSpawnRate: 0.2
-  redSpawns: 100
-  blueSpawns: 50
+  redSpawnRate: 1
+  blueSpawnRate: 1
+  redSpawns: 20
+  blueSpawns: 20
   redHealth: 50
-  blueHealth: 100
+  blueHealth: 50
   redMaterial: {fileID: 2100000, guid: 469f1afca841fec498fcba6cadab54e2, type: 2}
   blueMaterial: {fileID: 2100000, guid: 4f5e9442a563535439e39f84f47f6778, type: 2}
 --- !u!4 &2094714404
