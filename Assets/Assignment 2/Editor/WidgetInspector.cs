@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Widget))]
 public class WidgetInspector : Editor
 {
     SerializedProperty name;
@@ -71,6 +70,7 @@ public class WidgetInspector : Editor
 
         imgC = new GUIContent("Off", buttonOnStyle.normal.background);
         EditorGUILayout.LabelField("On", imgC);
+
 
         // Apply modified properties to the connecting object
         serializedObject.ApplyModifiedProperties();
