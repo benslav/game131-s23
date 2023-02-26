@@ -21,6 +21,7 @@ public class LoadSettingsFromFile : MonoBehaviour
             // Assign those values to the appropriate fields in bounceController.
         }
 
+        int t = int.Parse("355");
 
     }
 
