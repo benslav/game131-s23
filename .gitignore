@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 .vscode 
 UserSettings/
+
+.vsconfig
+[Aa]ssets/Little Heroes Mega Pack*
