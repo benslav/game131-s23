@@ -6,33 +6,17 @@ using UnityEditor;
 
 public class WidgetInspector : Editor
 {
-    SerializedProperty name;
-    SerializedProperty count;
-
-    float renderWidth, controlWidth;
-
+    SerializedProperty widgetName, count;
     GUIStyle buttonOffStyle, buttonOnStyle;
-    bool buttonOn = false;
 
     void OnEnable() 
     {
-        name = serializedObject.FindProperty("name");
-        count = serializedObject.FindProperty("count");
-
+        widgetName = serializedObject.FindProperty("widgetName");
     }
 
     private void OnSceneGUI()
     {
-        if (buttonOffStyle == null)
-        {
-            buttonOffStyle = new GUIStyle("button");
-            buttonOnStyle = new GUIStyle("button");
-
-            buttonOnStyle.normal.background = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            buttonOnStyle.normal.background.SetPixels(new Color[] { Color.green });
-            buttonOnStyle.normal.background.Apply();
-
-        }
+        // HINT: Use this to initialize GUIStyles
     }
 
     public override void OnInspectorGUI() 
@@ -40,61 +24,31 @@ public class WidgetInspector : Editor
         // Update the connecting object
         serializedObject.Update();
 
-        // Render the controls and handle user input
-        name.stringValue = EditorGUILayout.TextField("Widget Name", name.stringValue);
-        int prevCount = count.intValue;
-        count.intValue = EditorGUILayout.IntField("Widget Count", count.intValue);
-        count.intValue = Mathf.Clamp(count.intValue, 0, 17);
+        // ************ Start rendering custom content ************* //
 
 
-//        EditorGUILayout.LabelField("");
+        // A sample string property, same as the examples, for the [widgetName] property of Widget (see Widget.cs)
+        widgetName.stringValue = EditorGUILayout.TextField("Name", widgetName.stringValue);
 
-//        EditorGUI.DrawRect(new Rect(3, 50, 100, 20), Color.green);
+        // A sample int property, same as the examples, for the [count] property of Widget (see Widget.cs)
+        count.intValue = EditorGUILayout.IntField("Count", count.intValue);
 
 
-        if (GUILayout.Button("um", buttonOn ? buttonOnStyle : buttonOffStyle))
-        {
-            Debug.Log("plorgh");
-            buttonOn = !buttonOn;
+        // TODO: Create an int control for the [number] property of Widget (see Widget.cs)
+        // TODO: Clamp this control's value between 0 and 100
 
-        }
+        // TODO: Draw a green rectangle 20 pixels high and half the current width of the control,
+        // horizontally centered (HINT: EditorGUIUtility.currentViewWidth)
 
-        //renderWidth = EditorGUIUtility.currentViewWidth;
-        //controlWidth = renderWidth * 0.6f;   // 60%
+        // TODO: Draw a button labled "Button" that causes "button clicked" to appear
+        // in the Console (HINT: You can use GUILayout as well as EditorGUILayout here)
 
-        //DrawBorderedRect(GetControlRect(50), Color.green, 2, Color.gray);
 
-        GUIContent imgC = new GUIContent(buttonOffStyle.normal.background);
-
-        EditorGUILayout.LabelField(imgC);
-
-        imgC = new GUIContent("Off", buttonOnStyle.normal.background);
-        EditorGUILayout.LabelField("On", imgC);
-
+        // ************ Endrendering custom content ************* //
 
         // Apply modified properties to the connecting object
         serializedObject.ApplyModifiedProperties();
     }
 
-    Rect GetControlRect(int height)
-    {
-        return new Rect(renderWidth - controlWidth, height, controlWidth - 5, 20);
-    }
-
-    void DrawBorderedRect(Rect area, Color interiorColor, int borderThickness, Color borderColor)
-    {
-        if (borderThickness > 0)
-        {
-            EditorGUI.DrawRect(area, borderColor);
-        }
-
-        Rect interior = new Rect(area);
-        interior.x += borderThickness;
-        interior.width -= borderThickness * 2;
-        interior.y += borderThickness;
-        interior.height -= borderThickness * 2;
-
-        EditorGUI.DrawRect(interior, interiorColor);
-    }
 
 }
