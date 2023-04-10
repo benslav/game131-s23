@@ -10,6 +10,18 @@ public class SteeringPath : MonoBehaviour
     private List<float> stretchDistances = new List<float>();
 
     public bool connectEndToStart = true;
+
+    public bool isForwardAligned = true;
+
+
+    public List<Vector3> Waypoints { get { return waypointLocations; } }
+
+    public void SetWaypoint(int index, Vector3 location)
+    {
+        transform.GetChild(index).position = location;
+        RefreshPath();
+    }
+
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +37,6 @@ public class SteeringPath : MonoBehaviour
         {
             waypointLocations.Add(transform.GetChild(i).position);
         }
-        if (connectEndToStart) waypointLocations.Add(transform.GetChild(0).position);
 
         float runningDistance = 0;
         for (int i = 0; i < waypointLocations.Count - 1; i++)
@@ -33,6 +44,12 @@ public class SteeringPath : MonoBehaviour
             float stretchDistance = (waypointLocations[i + 1] - waypointLocations[i]).magnitude;
             stretchDistances.Add(runningDistance + stretchDistance);
             runningDistance += stretchDistance;
+        }
+
+        if (connectEndToStart)
+        {
+            float stretchDistance = (waypointLocations[0] - waypointLocations[waypointLocations.Count - 1]).magnitude;
+            stretchDistances.Add(runningDistance + stretchDistance);
         }
 
     }
@@ -47,9 +64,38 @@ public class SteeringPath : MonoBehaviour
     {
         Color c = Gizmos.color;
         Gizmos.color = Color.cyan;
-        for (int i = 0; i < waypointLocations.Count - 1; i++)
+
+        List<Vector3> locations = new List<Vector3>(waypointLocations);
+        if (connectEndToStart) locations.Add(waypointLocations[0]);
+
+        for (int i = 0; i < locations.Count - 1; i++)
         {
-            Gizmos.DrawLine(waypointLocations[i], waypointLocations[i + 1]);
+            Gizmos.DrawLine(locations[i], locations[i + 1]);
+
+            // Draw an "arrow"
+            Vector3 centerPoint = (locations[i] + locations[i + 1]) / 2;
+
+            // Aligned vector
+            Vector3 onSeg = (locations[i + 1] - locations[i]);
+            // Find a coplanar normal
+            Vector3 cpn = Quaternion.AngleAxis(90, Vector3.up) * onSeg;
+            cpn.Normalize();
+            cpn *= 0.6f;
+
+            // onSeg points forward
+            if (!isForwardAligned) onSeg *= -1;
+            onSeg.Normalize();
+
+            Gizmos.DrawLine(centerPoint, centerPoint - onSeg + cpn);
+            Gizmos.DrawLine(centerPoint, centerPoint - onSeg - cpn);
+
+        }
+
+        // Draw spheres at each waypoint
+        for (int i = 0; i < waypointLocations.Count; i++)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(waypointLocations[i], 0.5f);
         }
     }
 
