@@ -90,7 +90,7 @@ public class EditorScript : Editor
                         }
                     }
 
-                    GameObject.Instantiate(path.transform.GetChild(0), newClosestPosition, Quaternion.Euler(0, 0, 0));
+                    Instantiate(path.transform.GetChild(0), newClosestPosition, Quaternion.Euler(0, 0, 0));
                 }
                 break;
             case EventType.MouseDrag:
