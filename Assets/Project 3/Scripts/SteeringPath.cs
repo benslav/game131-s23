@@ -151,7 +151,7 @@ public class SteeringPath : MonoBehaviour
 
     }
 
-    private Vector3 ClosestPointOnSegment(Vector3 a, Vector3 b, Vector3 o)
+    public Vector3 ClosestPointOnSegment(Vector3 a, Vector3 b, Vector3 o)
     {
         // parameterized dot product = 0
 
